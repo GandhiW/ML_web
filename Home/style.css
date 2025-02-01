@@ -92,8 +92,7 @@ p {
     color: #000000;
     font-size: 16px;
     line-height: 24px;
-    padding-left: 15px; /* Left padding */
-    padding-right: 15px; /* Right padding */
+    margin-right: 20px;
 }
 
 /* Override for paragraphs inside .card class */
@@ -119,8 +118,7 @@ h5 {
 .button-group {
     display: flex;
     gap: 15px;
-    margin-top: 30px;
-
+    margin-top: 5px;
 }
 
 button {
@@ -134,6 +132,7 @@ button {
     outline: none;
     cursor: pointer;
     transition: 0.3s;
+    margin-left: 10px;
 }
 
 button:hover {
