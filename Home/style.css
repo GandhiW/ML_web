@@ -37,6 +37,7 @@ body {
     top: 0;
     left: 0;
     z-index: 1000; /* Keeps it above other elements */
+    box-sizing: border-box; /* Prevent padding from affecting the width */
 }
 
 .logo {
@@ -221,6 +222,15 @@ button:hover {
     button {
         width: 100%; /* Buttons take full width */
     }
+
+    nav ul {
+        gap: 15px; /* Adjust gap between links for mobile */
+    }
+
+    nav ul li a {
+        font-size: 14px; /* Adjust font size */
+        padding: 10px 15px; /* Adjust padding */
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -250,7 +260,6 @@ button:hover {
     left: 0;          /* Ensures the footer takes full width */
     width: 100%;      /* Full width */
     z-index: 1000;    /* Ensures the footer stays above other content */
-
 }
 
 .footer p{
