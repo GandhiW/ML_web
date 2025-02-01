@@ -1,0 +1,274 @@
+/* General style for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0 20px;
+    margin-top: 80px; /* Adjust margin to match navbar height */
+}
+
+.container {
+    padding-top: 20px; /* Adds spacing to push content down */
+}
+
+.section-container {
+    margin: 0 auto;
+    text-align: left;
+}
+
+.paragraf {
+    margin: 20px;
+}
+
+/* Navbar */
+.navbar {
+    width: 100vw; /* Ensure full width */
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #03252f;
+    padding: 15px 5%; /* Use percentage padding for responsiveness */
+    position: fixed; /* Keeps navbar at the top */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Keeps it above other elements */
+    box-sizing: border-box; /* Prevent padding from affecting the width */
+}
+
+.logo {
+    width: 50px;
+    cursor: pointer;
+}
+
+nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 40px; /* Space between links */
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 12px 20px;
+    transition: background 0.3s;
+}
+
+nav ul li a:hover {
+    background: #4c7273;
+    border-radius: 10px;
+}
+
+/* Row container for cards */
+.row {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping for responsiveness */
+    gap: 20px; /* Space between columns */
+    justify-content: space-between; /* Ensure cards are spaced */
+}
+
+/* Columns for cards */
+.col {
+    width: 48%; /* Set column to take up approximately half of the row */
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+/* General style for paragraphs */
+p {
+    color: #000000;
+    font-size: 16px;
+    line-height: 24px;
+    margin-right: 20px;
+}
+
+/* Override for paragraphs inside .card class */
+.card p {
+    color: #fff;
+}
+
+/* Headings */
+h1 {
+    color: #000;
+    font-size: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 120px; /* Adjust this value to move it further down */
+}
+
+h5 {
+    color: #fff;
+    text-shadow: 0 0 5px #999;
+}
+
+/* Buttons */
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+button {
+    width: 180px;
+    color: #fff;
+    font-size: 14px;
+    padding: 12px 0;
+    background-color: #03252f;
+    border: 0;
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-left: 10px;
+}
+
+button:hover {
+    background-color: #085066;
+}
+
+/* Cards */
+.card {
+    width: 100%; /* Full width inside .col */
+    height: 230px;
+    display: inline-block;
+    border-radius: 10px;
+    padding: 15px 25px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 10px 0;
+    background-position: center;
+    background-size: cover;
+    transition: transform 0.7s;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Card Backgrounds */
+.card1 { background-image: url(dentistry.jpg); }
+.card2 { background-image: url(gigi.jpg); }
+.card3 { background-image: url(lidah.jpg); }
+.card4 { background-image: url(dentist.jpeg); }
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+/* Dark Transparent Overlay */
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Dark transparent layer */
+    border-radius: 10px;
+    z-index: 1;
+}
+
+/* Keep text on top of the overlay */
+.card h5, .card p {
+    position: relative;
+    z-index: 2;
+}
+
+/* Desktop: 2 cards per row */
+@media screen and (min-width: 768px) {
+    .card {
+        width: calc(50% - 20px); /* 50% width for 2 cards in each row */
+    }
+}
+
+/* Mobile: Stacked cards */
+@media screen and (max-width: 768px) {
+    .row {
+        flex-direction: column; /* Stack the cards vertically on mobile */
+    }
+
+    .col {
+        width: 100%; /* Make each column take full width */
+    }
+
+    h1 {
+        font-size: 36px;
+        text-align: center;
+    }
+
+    .card {
+        width: 100%; /* Ensure cards take full width */
+        height: auto;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button {
+        width: 100%; /* Buttons take full width */
+    }
+
+    nav ul {
+        gap: 15px; /* Adjust gap between links for mobile */
+    }
+
+    nav ul li a {
+        font-size: 14px; /* Adjust font size */
+        padding: 10px 15px; /* Adjust padding */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 30px;
+    }
+
+    .navbar {
+        padding: 10px;
+    }
+
+    nav ul {
+        gap: 5px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+.footer {
+    background-color: #4c7273;
+    padding: 20px 0;
+    text-align: center;
+    position: fixed;  /* Makes the footer fixed at the bottom of the screen */
+    bottom: 0;        /* Aligns the footer to the bottom edge of the screen */
+    left: 0;          /* Ensures the footer takes full width */
+    width: 100%;      /* Full width */
+    z-index: 1000;    /* Ensures the footer stays above other content */
+}
+
+.footer p{
+    color: #fff;
+}
+
+/* Mobile specific footer adjustment */
+@media screen and (max-width: 768px) {
+    .footer {
+        position: relative;  /* Makes sure it's positioned based on content */
+        bottom: 0;
+    }
+}
