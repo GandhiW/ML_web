@@ -1,0 +1,126 @@
+.f1 {
+    display: flex;
+    flex-direction: column; /* Untuk memastikan elemen di dalamnya disusun secara vertikal */
+    align-items: center; /* Memusatkan secara horizontal */
+    width: 50%; /* Lebar container f1, sesuaikan sesuai kebutuhan */
+    margin: 20px auto; /* Memberikan margin atas/bawah dan auto untuk kiri/kanan (memusatkan container) */
+
+    border-radius: 10px;
+    padding: 20px; /* Menambahkan padding di dalam container */
+}
+
+.f2 {
+    display: flex;
+    flex-direction: column; /* Untuk memastikan elemen di dalamnya disusun secara vertikal */
+    align-items: center; /* Memusatkan secara horizontal */
+    width: 50%; /* Lebar container f1, sesuaikan sesuai kebutuhan */
+    margin: 20px auto; /* Memberikan margin atas/bawah dan auto untuk kiri/kanan (memusatkan container) */
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px; /* Menambahkan padding di dalam container */
+}
+
+.fb_1{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 5%;
+    margin-left: 2%;
+}
+
+.upload_image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px; /* Margin bawah untuk memberi jarak dengan tombol */
+}
+
+#preview{
+    max-width: 250px;
+    max-height: 250px;
+}
+
+.imagelabel{
+    font-size: x-large;
+    font-weight: 600;
+}
+
+.fileup{
+    display: flex; 
+    justify-content: center;
+}
+
+input[type="file"] {
+    display: inline-block;
+    margin: 0;
+    padding-left: 80px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%; /* Memastikan form mengisi lebar container */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px; /* Margin bawah untuk memberi jarak dengan form */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif; /* Contoh font */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Contoh warna latar belakang */
+}
+
+/* Gaya tombol dasar */
+button {
+    border: none; /* Hilangkan border */
+    padding: 10px 30px; /* Padding atas/bawah dan kiri/kanan */
+    text-align: center; /* Teks rata tengah */
+    text-decoration: none; /* Hilangkan garis bawah */
+    display: inline-block; /* Tampilkan sebagai inline-block */
+    font-size: 16px; /* Ukuran font */
+    margin: 4px 2px; /* Margin */
+    cursor: pointer; /* Ubah kursor menjadi pointer saat dihover */
+    border-radius: 20px; /* Membuat sudut tombol sedikit melengkung */
+    transition: background-color 0.3s ease; /* Transisi warna latar belakang */
+}
+  
+  /* Efek hover */
+button:hover {
+    background-color: #45a049; /* Warna latar belakang saat dihover */
+    color: white;
+}
+  
+  /* Gaya tombol saat diklik */
+button:active {
+    background-color: #3e8e41; /* Warna latar belakang saat diklik */
+    color : white;
+}
+
+hr {
+    color: black; /* Warna garis */
+    background-color: black; /* Warna latar belakang garis (untuk beberapa browser) */
+    height: 1px; /* Ketebalan garis */
+    border: 0; /* Hilangkan border default */
+    margin: 20px 0; /* Margin atas dan bawah */
+    width: 100%; /* Pastikan garis memenuhi lebar container */
+}
+
+#navbar{
+    display : flex;
+    max-width: 100%;
+    max-height: 100%;
+}

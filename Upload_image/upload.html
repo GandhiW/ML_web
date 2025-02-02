@@ -1,15 +1,39 @@
-<!-- File: page1.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page 1</title>
+  <title>Image Upload</title>
+  <link rel="stylesheet" href="upload.css">
+  <link rel="stylesheet" href="../navbar.css"> <!--navbar-->
+  <script src="upload.js"></script>
 </head>
 <body>
-  <h1>Page 3</h1>
-  <button>
-    <a href="../Webcam/webcam.html">click here</a>
-  </button>
+  <div id="navbar">
+    
+  </div>
+  <div class = 'fb_1'>
+    <div class = 'f1'>
+      <h1>Upload an Image</h1>
+    </div>
+    <div class = 'f2'>
+      <form action="upload.html" method="post" enctype="multipart/form-data">
+        <label for="file" class="imagelabel">Choose an image:</label>
+        <br><br><br>
+        <div class = "upload_image">
+          <div class = "fileup">
+            <input type="file" id="fileElem" accept="image/*">
+          </div>
+          <br>
+          <img id="preview" src="#" alt="">
+        </div>
+        <br>
+        <button type="submit">Upload</button>
+      </form>
+    </div>
+  </div>
+
+  <hr>
+  
 </body>
 </html>

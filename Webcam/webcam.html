@@ -8,8 +8,34 @@
 </head>
 <body>
   <h1>Page 4</h1>
-  <button>
-    <a href="../Artikel/artikel.html">click here</a>
-  </button>
+  <h2>Webcam Preview</h2>
+  <video id="webcam" autoplay playsinline></video>
+  <br>
+  <button id="capture">Capture Image</button>
+  <canvas id="canvas" style="display:none;"></canvas>
+  
+  <script>
+    const video = document.getElementById('webcam');
+    const canvas = document.getElementById('canvas');
+    const captureButton = document.getElementById('capture');
+    const constraints = {
+      video: true
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints)
+      .then((stream) => {
+        video.srcObject = stream;
+      })
+      .catch((error) => {
+        console.error('Error accessing webcam:', error);
+      });
+
+    captureButton.addEventListener('click', () => {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    });
+  </script>
 </body>
 </html>

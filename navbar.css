@@ -1,0 +1,128 @@
+/* General style for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0 20px;
+    margin-top: 80px; /* Adjust margin to match navbar height */
+}
+
+/* Navbar */
+.navbar {
+    width: 100vw; /* Ensure full width */
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #03252f;
+    padding: 15px 5%; /* Use percentage padding for responsiveness */
+    position: fixed; /* Keeps navbar at the top */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Keeps it above other elements */
+    box-sizing: border-box; /* Prevent padding from affecting the width */
+}
+
+.logo {
+    width: 50px;
+    cursor: pointer;
+}
+
+nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 40px; /* Space between links */
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 12px 20px;
+    transition: background 0.3s;
+}
+
+nav ul li a:hover {
+    background: #4c7273;
+    border-radius: 10px;
+}
+
+/* Headings */
+h1 {
+    color: #000;
+    font-size: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 120px; /* Adjust this value to move it further down */
+}
+
+h5 {
+    color: #fff;
+    text-shadow: 0 0 5px #999;
+}
+
+button {
+    width: 180px;
+    color: #fff;
+    font-size: 14px;
+    padding: 12px 0;
+    background-color: #03252f;
+    border: 0;
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-left: 10px;
+}
+
+button:hover {
+    background-color: #085066;
+}
+
+
+/* Mobile: Stacked cards */
+@media screen and (max-width: 768px) {
+    
+    button {
+        width: 100%; /* Buttons take full width */
+    }
+
+    nav ul {
+        gap: 15px; /* Adjust gap between links for mobile */
+    }
+
+    nav ul li a {
+        font-size: 14px; /* Adjust font size */
+        padding: 10px 15px; /* Adjust padding */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 30px;
+    }
+
+    .navbar {
+        padding: 10px;
+    }
+
+    nav ul {
+        gap: 5px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
