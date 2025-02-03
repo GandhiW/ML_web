@@ -1,40 +1,33 @@
+<!-- File: page1.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Upload</title>
-  <link rel="stylesheet" href="upload.css">
-  <link rel="stylesheet" href="../navbar.css"> <!--navbar-->
-  <script src="upload.js"></script>
+  <title>Live Oralytics</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/webcam.css') }}">
+  <script src="{{ url_for('static', filename='js/webcam.js') }}"></script>
 </head>
 <body>
-  <div id="navbar">
-    
-  </div>
-  <div class = 'fb_1'>
-    <div class = 'f1'>
-      <h1>Upload an Image</h1>
-    </div>
-    <div class = 'f2'>
-      <form action="upload.html" method="post" enctype="multipart/form-data">
-        <label for="file" class="imagelabel">Choose an image:</label>
-        <br><br><br>
-        <div class = "upload_image">
-          <div class = "fileup">
-            <input type="file" id="fileElem" accept="image/*">
-          </div>
-          <br>
-          <img id="preview" src="#" alt="">
-        </div>
-        <br>
-        <button type="submit">Upload</button>
-      </form>
-    </div>
-  </div>
+  <!-- Import Navbar -->
+  {% include 'navbar.html' %}
 
+  <!-- Content -->
+  <div class = "cam-box">
+    <br>
+    <video id="webcam" autoplay playsinline muted style= "display : none;"></video>
+    <canvas id="canvas" style="display:none;"></canvas>
+    <img id="camera-off-image" src="{{ url_for('static', filename='images/disabled-cam.png') }}" alt="Camera Off" style="display: block;">
+    <br>
+    <div class = "cam-button">
+      <button id="camera-toggle">Turn On Camera</button>
+      <button id="camera-flip">Flip Camera</button>
+      <button id="camera-capture">Capture</button>
+    </div>
+  </div>
+  <br><br>
   <hr>
-  
+
   <div class = "prediction">
     <h2 class = "penyakit">penyakit a</h2> <!--override yang ini-->
     <p class = "penjelasan-penyakit">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> <!--override yang ini-->
@@ -65,5 +58,6 @@
   </div>
 
   <br><br><br><br>
+
 </body>
 </html>

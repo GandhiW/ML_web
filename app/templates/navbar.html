@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    </head>
+
+    <body>
+        <div class="navbar">
+            <img src="{{ url_for('static', filename='images/oralimg.png') }}" class="logo" alt="Logo"> <!-- Fixed class name -->
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/upload">Upload Gambar</a></li>
+                    <li><a href="/webcam">Live Webcam</a></li>
+                    <li><a href="/artikel">Artikel</a></li>
+                </ul>
+            </nav>
+        </div>
+    </body>
+</html>

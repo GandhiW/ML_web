@@ -158,10 +158,10 @@ button:hover {
 }
 
 /* Card Backgrounds */
-.card1 { background-image: url(dentistry.jpg); }
-.card2 { background-image: url(gigi.jpg); }
-.card3 { background-image: url(lidah.jpg); }
-.card4 { background-image: url(dentist.jpeg); }
+.card1 { background-image: url('/static/images/dentistry.jpg'); }
+.card2 { background-image: url('/static/images/gigi.jpg'); }
+.card3 { background-image: url('/static/images/lidah.jpg'); }
+.card4 { background-image: url('/static/images/dentist.jpeg'); }
 
 .card:hover {
     transform: translateY(-10px);
