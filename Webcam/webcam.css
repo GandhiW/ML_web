@@ -1,0 +1,111 @@
+*{
+    border: 0;
+    padding: 0;
+}
+
+.cam-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cam-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 2%;
+}
+
+#webcam, #canvas{
+    max-width: 854px;
+    max-height: 480px;
+    object-fit: cover; /* atau contain, sesuai preferensi */
+}
+
+#camera-off-image {
+    max-width: 854px;
+    max-height: 480px;
+    object-fit: cover; /* atau contain, sesuai preferensi */
+}
+
+
+hr {
+    color: black; /* Warna garis */
+    background-color: black; /* Warna latar belakang garis (untuk beberapa browser) */
+    height: 1px; /* Ketebalan garis */
+    border: 0; /* Hilangkan border default */
+    margin: 20px 0; /* Margin atas dan bawah */
+    width: 100%; /* Pastikan garis memenuhi lebar container */
+}
+
+.prediction{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.prediction p, h2{
+    margin: 1vh;
+}
+
+.partition{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.p1, .p2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 45%;
+    margin: 1%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 25px;
+}
+
+h2{
+    font-size: xx-large;
+}
+
+.penyebab, .solusi{
+    margin : 20px;
+}
+
+.ul{
+    list-style-type: none;
+    margin-bottom: 40px;
+}
+
+.ul li{
+    margin: 8px;
+}
+
+.footer {
+    background-color: #4c7273;
+    padding: 20px 0;
+    text-align: center;
+    position: fixed;  /* Makes the footer fixed at the bottom of the screen */
+    bottom: 0;        /* Aligns the footer to the bottom edge of the screen */
+    left: 0;          /* Ensures the footer takes full width */
+    width: 100%;      /* Full width */
+    z-index: 1000;    /* Ensures the footer stays above other content */
+}
+
+.footer p{
+    color: #fff;
+}
+
+/* Mobile specific footer adjustment */
+@media screen and (max-width: 768px) {
+    .footer {
+        position: relative;  /* Makes sure it's positioned based on content */
+        bottom: 0;
+    }
+}
+

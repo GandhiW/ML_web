@@ -1,21 +1,12 @@
-
-
-const btnHam = document.querySelector('.ham-btn');
-const btnTimes = document.querySelector('.times-btn');
-const navBar = document.getElementById('nav-bar');
-
-btnHam.addEventListener('click', function(){
-    if(btnHam.className !== ""){
-        btnHam.style.display = "none";
-        btnTimes.style.display = "block";
-        navBar.classList.add("show-nav");
-    }
-})
-
-btnTimes.addEventListener('click', function(){
-    if(btnHam.className !== ""){
-        this.style.display = "none";
-        btnHam.style.display = "block";
-        navBar.classList.remove("show-nav");
-    }
-})
+// navbar
+fetch("../navbar.html") // Pastikan path menuju navbar benar
+  .then(response => {
+      if (!response.ok) {
+          throw new Error("Failed to load navbar");
+      }
+      return response.text();
+  })
+  .then(data => {
+      document.getElementById("navbar").innerHTML = data;
+  })
+  .catch(error => console.error("Error loading navbar:", error));

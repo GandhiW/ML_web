@@ -3,6 +3,11 @@
 font-family: 'Roboto', sans-serif;
 
 */
+#navbar{
+    display : flex;
+    max-width: 100%;
+    max-height: 100%;
+}
 
 *{
     box-sizing: border-box;
@@ -38,27 +43,28 @@ hr{
     margin: 0 auto;
 }
 /* Navbar */
-.navbar {
-    width: 100vw; /* Ensure full width */
+
+/* .navbar {
+    width: 100vw; 
     height: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #03252f;
-    padding: 15px 5%; /* Use percentage padding for responsiveness */
-    position: fixed; /* Keeps navbar at the top */
+    padding: 15px 5%; 
+    position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000; /* Keeps it above other elements */
-    box-sizing: border-box; /* Prevent padding from affecting the width */
-}
+    z-index: 1000; 
+    box-sizing: border-box;
+} */
 
-.logo {
+/* .logo {
     width: 50px;
     cursor: pointer;
-}
+} */
 
-nav {
+/* nav {
     flex-grow: 1;
     display: flex;
     justify-content: flex-end;
@@ -67,7 +73,7 @@ nav {
 nav ul {
     display: flex;
     list-style: none;
-    gap: 40px; /* Space between links */
+    gap: 40px; 
     padding: 0;
     margin: 0;
 }
@@ -83,7 +89,7 @@ nav ul li a {
 nav ul li a:hover {
     background: #4c7273;
     border-radius: 10px;
-}
+} */
 
 /* header */
 
@@ -337,11 +343,12 @@ main a:hover{
     margin-right: 10px;
 }
 
+
 .footer {
     background-color: #4c7273;
     padding: 20px 0;
     text-align: center;
-    position: relative; 
+    position: fixed;  /* Makes the footer fixed at the bottom of the screen */
     bottom: 0;        /* Aligns the footer to the bottom edge of the screen */
     left: 0;          /* Ensures the footer takes full width */
     width: 100%;      /* Full width */
@@ -351,6 +358,7 @@ main a:hover{
 .footer p{
     color: #fff;
 }
+
 
 @media(max-width: 460px){
     .hot-topic-content h2{
@@ -406,15 +414,15 @@ main a:hover{
         position: relative;  /* Makes sure it's positioned based on content */
         bottom: 0;
     }
-    nav ul {
-        gap: 15px; /* Adjust gap between links for mobile */
+    /* nav ul {
+        gap: 15px; 
     }
 
     nav ul li a {
-        font-size: 14px; /* Adjust font size */
-        padding: 10px 15px; /* Adjust padding */
+        font-size: 14px;
+        padding: 10px 15px;
     }
-    
+     */
 }
 
 
@@ -436,13 +444,13 @@ main a:hover{
         font-size: 30px;
     }
 
-    .navbar {
+    /* .navbar {
         padding: 10px;
     }
 
     nav ul {
         gap: 5px;
-    }
+    } */
 
     button {
         width: 100%;
