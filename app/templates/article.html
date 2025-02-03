@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+ <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/article.css') }}">
+        <!-- google fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=sans-serif:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+        <!-- fontawesome -->
+        <script src="https://kit.fontawesome.com/dbed6b6114.js" crossorigin="anonymous"></script>
+        <!-- <script src="{{ url_for('static', filename='js/article.js') }}"></script> -->
+    </head>
+    <body>
+        <!-- Import Navbar -->
+        {% include 'navbar.html' %}
+
+        <!-- Content -->
+        <div>
+            <section class = "banner">
+                <div class = "banner-main-content">
+                    <h2>BERITA TERKINI TENTANG LIDAH DI INDONESIA</h2>
+                    <h3>Portal Kesehatan Lidah Terpercaya Tanah Air</h3>
+    
+                    <button>
+                        <a href = "#">Info Selengkapnya</a>
+                    </button>
+    
+                    <div class = "current-news-head">
+                        <h3>Bisa Jadi Tanda Penyakit, Kenali Warna-Bentuk Lidah yang Perlu Diwaspadai</span></h3>
+    
+                        <h3>Fungsi Lidah sebagai Organ Vital dalam Tubuh Manusia</span></h3>
+    
+                        <h3>Waspadai Tanda 'Red-Flag' di Lidah, Bisa Jadi Penyakit Kanker-Diabetes</span></h3>
+    
+                        <h3>Viral Pria Solo Kena Kanker Lidah di Usia 33 Tahun, Begini Kondisinya Terkini</span></h3>
+                    </div>
+                </div>
+    
+                <div class = "banner-sub-content">
+                    <div class = "hot-topic">
+                        <img src = "{{ url_for('static', filename='images/banner-news-1(2).jpg') }}" alt = "">
+    
+                        <div class = "hot-topic-content">
+                            <h2>
+                                Wanita Ini Idap Kanker di Lidah, Awalnya Dikira Cuma Luka karena Tergigit
+                            </h2>
+                            
+                            <a href = "#">Baca Selengkapnya</a>
+                        </div>
+                    </div>
+    
+                    <div class = "hot-topic">
+                        <img src = "{{ url_for('static', filename='images/banner-news-2(3).jpg') }}" alt = "">
+    
+                        <div class = "hot-topic-content">
+                            <h2>Lidah Ditumbuhi Rambut karena Kanker, Stunting Bikin Anak Rentan Obesitas</h2>
+    
+                            <a href = "#">Baca Selengkapnya</a>
+                        </div>
+                    </div>
+    
+                    <div class = "hot-topic">
+                        <img src = "{{ url_for('static', filename='images/banner-news-3(2).jpg') }} alt = "">
+    
+                        <div class = "hot-topic-content">
+                            <h2>Waspada, Mulut Kering Bisa jadi Pertanda Penyakit Serius</h2>
+    
+                            <a href = "#">Baca Selengkapnya</a>
+                        </div>
+                    </div>
+    
+                    <div class = "hot-topic">
+                        <img src = "{{ url_for('static', filename='images/banner-news-4(3).jpg') }}" alt = "">
+    
+                        <div class = "hot-topic-content">
+                            <h2>5 Kondisi Penyebab Disgeusia Gangguan Indra Pengecap</h2>
+                            <a href = "#">Baca Selengkapnya</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <hr>
+    
+            <main>
+                <section class = "main-container-left">
+                    <h2>Berita Terpopuler</h2>
+                    <div class = "container-top-left">
+                        <article>
+                            <img src = "{{ url_for('static', filename='images/beritapopuler-1.png') }}">
+    
+                            <div>
+                                <h3>Sakit Lidah Bisa Jadi Gejala Kanker Paru dan Berita Hits Kesehatan Lainnya</h3>
+    
+                                <p>Siapa sangka, sakit di area lidah bisa menjadi gejala penyakit yang berbahaya seperti kanker paru? Bagaimana penjelasannya dan apa korelasinya?</p>
+    
+                                <a href = "#">Baca Selengkapnya <span>>></span></a>
+                            </div>
+                        </article>
+                    </div>
+    
+                    <div class = "container-bottom-left">
+                        <article>
+                            <img src = "{{ url_for('static', filename='images/beritapopuler-2.png') }}">
+                            <div>
+                                <h3>Menjaga Kesehatan Lidah yang Mudah, Yuk Simak!</h3>
+                                <p>Melakukan sikat gigi secara rutin akan menjaga kesehatan gigi Anda. Namun percaya atau tidak, kesehatan lidah juga penting untuk Anda perhatikan. </p>
+    
+                                <a href = "#">Baca Selengkapnya <span>>></span></a>
+                            </div>
+                        </article>
+    
+                        <article>
+                            <img src = "{{ url_for('static', filename='images/beritapopuler-3(2).png') }}">
+                            <div>
+                                <h3>Cek Kesehatanmu Lewat Perubahan yang Terjadi pada Lidah</h3>
+                                <p>Kadang pada lidah bisa terbentuk celah, terutama saat tubuh kita menua. Namun celah di lidah juga terkait dengan kondisi kesehatan seperti Down syndrome, psoriasis dan sindrom Sjögren's.</p>
+                                <a href = "#">Baca Selengkapnya <span>>></span></a>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+    
+                <section class = "main-container-right">
+                    <h2>Berita Terbaru</h2>
+                    
+                    <article>
+                        <h4>terkini</h4>
+                        <div>
+                            <h2>Benarkah lidah kita memiliki 'zona rasa'?</h2>
+    
+                            <p>Anda mungkin ingat dengan ilustrasi yang diajarkan di sekolah - lidah berwarna merah muda dengan beberapa area yang ditandai untuk mengecap rasa yang berbeda</p>
+    
+                            <a href = "#">Baca Selengkapnya <span>>></span></a>
+                        </div>
+                        <img src = "{{ url_for('static', filename='images/terbaru-1(2).png') }}">
+                    </article>
+    
+                    <article>
+                        <h4>terkini</h4>
+                        <div>
+                            <h2>Kondisi Lidah dan Mulut yang Tunjukkan Indikasi Masalah Kesehatan</h2>
+    
+                            <p>Mulut merupakan salah satu anggota tubuh manusia yang mempunyai peran sangat penting. </p>
+    
+                            <a href = "#">Baca Selengkapnya <span>>></span></a>
+                        </div>
+                        <img src = "{{ url_for('static', filename='images/terbaru-2.png') }}">
+                    </article>
+    
+                    <article>
+                        <h4>terkini</h4>
+                        <div>
+                            <h2>Adakah Kondisi Lebih Parah Jika Tidak Menjaga Kesehatan Lidah dengan Baik? Ini Kata Dokter</h2>
+    
+                            <p>Penyebab penyakit pada lidah dikarenakan kurang pembersihan</p>
+    
+                            <a href = "#">Baca Selengkapnya <span>>></span></a>
+                        </div>
+                        <img src = "{{ url_for('static', filename='images/terbaru-3.png') }}">
+                    </article>
+    
+                    <article>
+                        <h4>terkini</h4>
+                        <div>
+                            <h2>Selain di Kulit, Psoriasis Juga Ditemukan di Lidah</h2>
+    
+                            <p>Psoriasis dikenal sebagai penyakit yang ditandai dengan kelainan pada kulit. Nah ternyata selain pada kulit, kelainan akibat psoriasis juga ditemukan di lidah.</p>
+    
+                            <a href = "#">Baca Selengkapnya <span>>></span></a>
+                        </div>
+                        <img src = "{{ url_for('static', filename='images/terbaru-4.jpg') }}">
+                    </article>
+    
+                    <article>
+                        <h4>terkini </h4>
+                        <div>
+                            <h2>Indera Perasa di Lidah Pria Ini Hilang, Apa Penyebabnya?</h2>
+    
+                            <p>Seorang pria asal Singapura memeriksakan diri setelah merasakan nyeri dan memerah di lidahnya serta rasa terbakar sekitar bibirnya nyaris selama enam bulan.</p>
+    
+                            <a href = "#">Baca Selengkapnya <span>>></span></a>
+                        </div>
+                        <img src = "{{ url_for('static', filename='images/terbaru-5.png') }}">
+                    </article>
+                </section>
+            </main>
+    
+           
+            <div class="footer">
+                <p>© 2025 Oralytics. All rights reserved.</p>
+            </div>
+        </div>
+        
+    </body>
+</html>
