@@ -17,12 +17,12 @@
       <h1>Upload an Image</h1>
     </div>
     <div class = 'f2'>
-      <form action="/upload" method="post" enctype="multipart/form-data">
+      <form action="/upload" method="POST" enctype="multipart/form-data">
         <label for="file" class="imagelabel">Choose an image:</label>
         <br><br><br>
         <div class = "upload_image">
           <div class = "fileup">
-            <input type="file" id="fileElem" accept="image/*">
+            <input type="file" id="fileElem" accept="image/*" name="image">
           </div>
           <br>
           <img id="preview" src="#" alt="">
@@ -30,34 +30,47 @@
         <br>
         <button type="submit">Upload</button>
       </form>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul>
+            {% for category, message in messages %}
+              <li class="alert alert-{{ category }}" style="list-style-type: none;">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+    {% endwith %}
     </div>
   </div>
 
   <hr>
   
+  {% if common %}
   <div class = "prediction">
-    <h2 class = "penyakit">penyakit a</h2> <!--override yang ini-->
-    <p class = "penjelasan-penyakit">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> <!--override yang ini-->
-    <br>
-    <div class = "partition">
-      <div class = "p1">
-        <h2 class = "penyebab">Penyebab</h2>
-        <ul class = "ul">
-          <li class = "penyebab-penyakit">Lorem ipsum dolor sit amet</li> <!--override yang ini-->
-          <li class = "penyebab-penyakit">Lorem ipsum dolor sit amet</li> <!--override yang ini-->
-          <li class = "penyebab-penyakit">Lorem ipsum dolor sit amet</li> <!--override yang ini-->
-        </ul>
+      <h2 class = "penyakit">{{ common }}</h2> <!--override yang ini-->
+      <p class = "penjelasan-penyakit">{{ description }}</p> <!--override yang ini-->
+      <br>
+      <div class = "partition">
+        <div class = "p1">
+          <h2 class = "penyebab">Penyebab</h2>
+          <ul class = "ul">
+            {% for factor in risk_factors %}
+            <li class = "penyebab-penyakit">{{ factor }}</li> <!--override yang ini-->
+            {% endfor %}
+          </ul>
+        </div>
+        <div class = "p2">
+          <h2 class = "solusi">Solusi</h2>
+          <ul class = "ul">
+            {% for solution in solutions %}
+            <li class = "solus-penyakit">{{ solution }}</li> <!--override yang ini-->
+            {% endfor %}
+          </ul>
+        </div>
       </div>
-      <div class = "p2">
-        <h2 class = "solusi">Solusi</h2>
-        <ul class = "ul">
-          <li class = "solus-penyakit">Lorem ipsum dolor sit amet</li> <!--override yang ini-->
-          <li class = "solus-penyakit">Lorem ipsum dolor sit amet</li> <!--override yang ini-->
-          <li class = "solus-penyakit">Lorem ipsum dolor sit amet</li> <!--override yang ini-->
-        </ul>
-      </div>
-    </div>
+  {% else %}
+    <h2 class = "penyakit">Belum ada prediksi saat ini</h2>
   </div>
+  {% endif %}
 
   
   <div class="footer">
