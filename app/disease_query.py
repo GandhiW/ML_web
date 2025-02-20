@@ -1,5 +1,22 @@
 import pandas as pd
 
+class DiseaseInfo:
+    def __init__(self, disease_name, common_name, description, risk_factors, solutions):
+        self.disease_name = disease_name
+        self.common_name = common_name
+        self.description = description
+        self.risk_factors = risk_factors
+        self.solutions = solutions
+    
+    def to_dict(self):
+        return {
+            "disease_name": self.disease_name,
+            "common_name": self.common_name,
+            "description": self.description,
+            "risk_factors": self.risk_factors,
+            "solutions": self.solutions
+        }
+
 def load_disease_data(file_path):
     """
     Load the disease information from the Excel file.
@@ -30,3 +47,16 @@ def get_disease_info(disease_name, df):
     else:
         # If no disease is found, return None or a message
         return None, None, None
+
+def get_multiple_disease_info(disease_names, disease_df):
+    disease_info_list = []
+    
+    for disease_name in disease_names:
+        commonName, description, risk_factors, solutions = get_disease_info(disease_name, disease_df)
+        
+        if description and risk_factors and solutions:
+            # Store each disease information in an instance of DiseaseInfo
+            disease_info = DiseaseInfo(disease_name, commonName, description, risk_factors, solutions)
+            disease_info_list.append(disease_info.to_dict())
+    
+    return disease_info_list

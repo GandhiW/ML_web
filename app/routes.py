@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, send_from_directory, current_app
 from werkzeug.utils import secure_filename
 import os
 from .model_predicting import predict_model  # Import the prediction function from a separate file
-from .disease_query import load_disease_data, get_disease_info  # Import disease querying
+from .disease_query import load_disease_data, get_disease_info, get_multiple_disease_info  # Import disease querying
 
 main = Blueprint('main', __name__)
 
@@ -39,17 +39,21 @@ def upload():
             print('file uploaded')
 
             # Call the separate function to handle model prediction
-            disease_name = predict_model(filename)
+            disease_names, prediction_image_path = predict_model(filename)
 
-            # Use the disease name to get additional info
-            commonName, description, risk_factors, solutions = get_disease_info('Caries', disease_df)
+            if disease_names:
+                # Get disease information for each predicted disease name
+                disease_info_list = get_multiple_disease_info(disease_names, disease_df)
 
-            if description and risk_factors and solutions:
-                print('got the disease information')
-                return render_template('upload.html', prediction=disease_name, common=commonName, description=description, 
-                                       risk_factors=risk_factors, solutions=solutions)
+                if disease_info_list:
+                    print('Got the disease information')
+                    prediction_image_path = prediction_image_path.replace('\\', '/')
+                    return render_template('upload.html', disease_info_list=disease_info_list, image_path=prediction_image_path)
+                else:
+                    flash(f'No disease information found.', 'danger')
+                    return render_template('upload.html')
             else:
-                flash(f'Gagal Menggunggah', 'danger')
+                flash(f'No disease detected.', 'warning')
                 return render_template('upload.html')
         else:
             flash('Tidak ada file yang diunggah.', 'warning')
@@ -61,3 +65,17 @@ def upload():
 @main.route('/webcam')
 def webcam():
     return render_template('webcam.html')
+
+# Route to serve images from the 'runs/detect' directory
+@main.route('/runs/detect/<path:filename>')
+def serve_prediction_image(filename):
+    # Get the absolute path to the root of the project (two levels up from the app folder)
+    root_path = os.path.abspath(os.path.join(current_app.root_path, '..', '..'))
+
+    # Define the path to the 'runs/detect' folder using the root path
+    runs_dir = os.path.join(root_path, 'runs', 'detect')
+
+    print(f"Serving file from: {os.path.join(runs_dir, filename)}")
+
+    # Use send_from_directory to serve the image
+    return send_from_directory(runs_dir, filename)
