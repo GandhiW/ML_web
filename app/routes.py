@@ -28,15 +28,15 @@ def upload():
         file = request.files.get('image')
         
         if file:
-            # Check if the file is empty or not
+            # Check if the file is empty or not (Tidak dipakai)
             # if file.filename == '':
             #     flash('Please upload an image file.', 'warning')
             #     return render_template('upload.html')
             
             # Secure and save the file
             filename = secure_filename(file.filename)
-            # file.save(os.path.join('app/static/images', filename))
-            # print('file uploaded')
+            file.save(os.path.join('app/static/images/inputs', filename))
+            print('file uploaded')
 
             # Call the separate function to handle model prediction
             disease_name = predict_model(filename)

@@ -5,7 +5,7 @@ def predict_model(filename):
     # For example, you could load a pre-trained model and make a prediction
     # using the filename (the path to the uploaded image).
     
-    image_path = os.path.join('app/static/images', filename)
+    image_path = os.path.join('app/static/images/inputs', filename)
     
     # Example: let's pretend we are using a model (e.g., TensorFlow, PyTorch) to predict the image
     # model = load_model('path_to_model')  # Load your trained model
