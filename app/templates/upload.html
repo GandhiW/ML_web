@@ -14,7 +14,11 @@
   <!-- Content -->
   <div class = 'fb_1'>
     <div class = 'f1'>
-      <h1>Upload an Image</h1>
+      {% if image_path %}
+        <img src="{{ url_for('static', filename=image_path) }}" alt="">
+      {% else %}
+        <h1>Upload an Image</h1>
+      {% endif %}
     </div>
     <div class = 'f2'>
       <form action="/upload" method="POST" enctype="multipart/form-data">
@@ -44,16 +48,17 @@
 
   <hr>
   
-  {% if common %}
+  {% if disease_info_list %}
   <div class = "prediction">
-      <h2 class = "penyakit">{{ common }}</h2> <!--override yang ini-->
-      <p class = "penjelasan-penyakit">{{ description }}</p> <!--override yang ini-->
+    {% for disease_info in disease_info_list %}
+      <h2 class = "penyakit">{{ disease_info['common_name'] }}</h2> <!--override yang ini-->
+      <p class = "penjelasan-penyakit">{{ disease_info['description'] }}</p> <!--override yang ini-->
       <br>
       <div class = "partition">
         <div class = "p1">
           <h2 class = "penyebab">Penyebab</h2>
           <ul class = "ul">
-            {% for factor in risk_factors %}
+            {% for factor in disease_info['risk_factors'] %}
             <li class = "penyebab-penyakit">{{ factor }}</li> <!--override yang ini-->
             {% endfor %}
           </ul>
@@ -61,12 +66,13 @@
         <div class = "p2">
           <h2 class = "solusi">Solusi</h2>
           <ul class = "ul">
-            {% for solution in solutions %}
+            {% for solution in disease_info['solutions'] %}
             <li class = "solus-penyakit">{{ solution }}</li> <!--override yang ini-->
             {% endfor %}
           </ul>
         </div>
       </div>
+      {% endfor %}
   {% else %}
     <h2 class = "penyakit">Belum ada prediksi saat ini</h2>
   </div>
