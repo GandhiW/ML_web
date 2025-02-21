@@ -1,6 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, send_from_directory, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, flash, send_from_directory, current_app, jsonify
 from werkzeug.utils import secure_filename
+import uuid
 import os
+import base64
+from PIL import Image
+import numpy as np
+from io import BytesIO
 from .model_predicting import predict_model  # Import the prediction function from a separate file
 from .disease_query import load_disease_data, get_disease_info, get_multiple_disease_info  # Import disease querying
 
@@ -28,18 +33,15 @@ def upload():
         file = request.files.get('image')
         
         if file:
-            # Check if the file is empty or not (Tidak dipakai)
-            # if file.filename == '':
-            #     flash('Please upload an image file.', 'warning')
-            #     return render_template('upload.html')
-            
-            # Secure and save the file
+             # Secure and save the file with a random unique ID in its name
             filename = secure_filename(file.filename)
-            file.save(os.path.join('app/static/images/inputs', filename))
+            # Generate a random ID and append it to the filename to ensure uniqueness
+            unique_filename = str(uuid.uuid4()) + "_" + filename
+            file.save(os.path.join('app/static/images/inputs', unique_filename))
             print('file uploaded')
 
             # Call the separate function to handle model prediction
-            disease_names, prediction_image_path = predict_model(filename)
+            disease_names, prediction_image_path = predict_model(unique_filename)
 
             if disease_names:
                 # Get disease information for each predicted disease name
@@ -66,16 +68,37 @@ def upload():
 def webcam():
     return render_template('webcam.html')
 
-# Route to serve images from the 'runs/detect' directory
-@main.route('/runs/detect/<path:filename>')
-def serve_prediction_image(filename):
-    # Get the absolute path to the root of the project (two levels up from the app folder)
-    root_path = os.path.abspath(os.path.join(current_app.root_path, '..', '..'))
+# Route for Webcam Prediction (predict)
+@main.route('/predict', methods=['POST'])
+def predict():
+    # Get the base64 image from the request
+    data = request.get_json()
+    image_data = data.get('image')  # Base64 image
 
-    # Define the path to the 'runs/detect' folder using the root path
-    runs_dir = os.path.join(root_path, 'runs', 'detect')
+    # Decode and process the image
+    image_data = image_data.split(',')[1]  # Remove base64 prefix
+    image = base64.b64decode(image_data)  # Decode base64 image
+    image = Image.open(BytesIO(image))  # Convert to PIL Image
+    image = np.array(image)  # Convert to numpy array
 
-    print(f"Serving file from: {os.path.join(runs_dir, filename)}")
+    # Save the image temporarily on the server
+    filename = "captured_image.png"  # Set an arbitrary filename (could be dynamic if you want)
+    image_save_path = os.path.join('app/static/images/inputs', filename)
+    Image.fromarray(image).save(image_save_path)
 
-    # Use send_from_directory to serve the image
-    return send_from_directory(runs_dir, filename)
+    # Get prediction result from the predict_model function
+    class_predictions, prediction_image_path = predict_model(filename)
+
+    if class_predictions:
+        # Query disease information for each predicted disease
+        disease_info_list = get_multiple_disease_info(class_predictions, disease_df)
+
+        if disease_info_list:
+            return jsonify({
+                'disease_info': disease_info_list,  # Directly return it as it's already a dictionary
+                'image_path': url_for('static', filename=prediction_image_path.replace('\\', '/'))
+            })
+        else:
+            return jsonify({'error': 'No disease information found'})
+    else:
+        return jsonify({'error': 'No disease detected'})

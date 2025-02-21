@@ -3,8 +3,7 @@ from ultralytics import YOLO
 
 def predict_model(filename):
     # Implement the model prediction process here
-    # For example, you could load a pre-trained model and make a prediction
-    # using the filename (the path to the uploaded image).
+    filename_jpg = filename.rsplit('.', 1)[0] + '.jpg'  # Change extension to .jpg
     
     image_path = os.path.join('app/static/images/inputs', filename)
     
@@ -18,7 +17,7 @@ def predict_model(filename):
     save_dir = os.path.join('app', 'static', 'runs', 'detect')
 
     # Perform inference and save results to the custom directory
-    results = model_oo.predict(image_path, save=True, project="app", name="static/runs/detect/predict")
+    results = model_oo.predict(image_path, save=True, project="app", name="static/runs/detect/predict", conf=0.5)
 
     print(results)
 
@@ -66,7 +65,7 @@ def predict_model(filename):
     
     # Get the latest prediction folder
     latest_predict_folder = sorted_folders[0]
-    prediction_image_path = os.path.join('runs', 'detect', latest_predict_folder, filename)  # Assuming result.jpg is the saved image
+    prediction_image_path = os.path.join('runs', 'detect', latest_predict_folder, filename_jpg)
     print(prediction_image_path)
     
     return class_predictions, prediction_image_path

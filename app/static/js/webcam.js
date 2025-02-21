@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const captureButton = document.getElementById('camera-capture');
     const canvas = document.getElementById('canvas');
     let cameraOffImage = document.getElementById('camera-off-image');
+    const loadingBarContainer = document.getElementById('loading-container'); // Add loading bar container
+    const loadingBar = document.getElementById('loading-bar');
 
     cameraOffImage.addEventListener('load', () => {
         // Gambar sudah dimuat, sekarang bisa ditampilkan
@@ -38,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     flipButton.style.display = 'none'; // Initially hide flip button
     captureButton.style.display = 'none'; // Initially hide capture button
+    loadingBarContainer.style.display = 'none'; // Hide loading initially
 
     function startCamera() {
         navigator.mediaDevices.getUserMedia({ 
@@ -103,19 +106,97 @@ document.addEventListener('DOMContentLoaded', () => {
                 context.translate(-canvas.width, 0);
             }
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
+    
             // Ganti video dengan canvas:
             video.style.display = 'none';  // Sembunyikan video
             canvas.style.display = 'block'; // Tampilkan canvas
             video.pause();                // Hentikan video
+
+             // Show loading animation
+            loadingBarContainer.style.display = 'block';
+            loadingBar.style.width = '0%';
+
+            // Animate loading bar
+            let progress = 0;
+            let interval = setInterval(() => {
+                progress += 10;
+                loadingBar.style.width = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                }
+            }, 500); // Adjust speed as needed
+    
+            // Convert the canvas to base64 and send it to the server
+            const imageData = canvas.toDataURL('image/png');
+            sendImageToServer(imageData, interval); // Function to send image to server
         } else {
             // Unfreeze:
             canvas.style.display = 'none'; // Sembunyikan canvas
             video.style.display = 'block'; // Tampilkan video kembali
-            video.style.filter = 'none';   // Reset filter (jika ada)
             video.play();                 // Lanjutkan video
         }
     });
+    
+    function sendImageToServer(imageData, interval) {
+        fetch('/predict', {
+            method: 'POST',
+            body: JSON.stringify({ image: imageData }), // Send the image as JSON
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // Clear any previous results
+            clearInterval(interval); // Stop loading animation when response is received
+            loadingBarContainer.style.display = 'none'; // Hide loading bar
+
+            const predictionContainer = document.querySelector('.prediction');
+            predictionContainer.innerHTML = ''; // Clear any previous predictions
+    
+            if (data.error) {
+                alert(data.error); // Display error if no disease detected
+            } else {
+                // Render disease information dynamically in the prediction container
+                const diseaseInfoHtml = data.disease_info.map(disease_info => `
+                    <h2 class="penyakit">${disease_info['common_name']}</h2>
+                    <p class="penjelasan-penyakit">${disease_info['description']}</p>
+                    <br>
+                    <div class="partition">
+                        <div class="p1">
+                            <h2 class="penyebab">Penyebab</h2>
+                            <ul class="ul">
+                                ${disease_info['risk_factors'].map(factor => `<li class="penyebab-penyakit">${factor}</li>`).join('')}
+                            </ul>
+                        </div>
+    
+                        <div class="p2">
+                            <h2 class="solusi">Solusi</h2>
+                            <ul class="ul">
+                                ${disease_info['solutions'].map(solution => `<li class="solus-penyakit">${solution}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `).join(''); // Join all HTML snippets together
+    
+                // Insert the disease info into the prediction container
+                predictionContainer.innerHTML = diseaseInfoHtml;
+    
+                // Display the result image if available
+                const resultImageContainer = document.getElementById('result-image-container');
+                const resultImage = document.createElement('img');
+                resultImage.src = data.image_path; // The path to the image returned by Flask
+                resultImage.alt = "Prediction result image";
+                resultImageContainer.innerHTML = ''; // Clear any previous image
+                resultImageContainer.appendChild(resultImage);
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            clearInterval(interval); 
+            loadingBarContainer.style.display = 'none';
+        });
+    }
 
     // startCamera(); // Optional: Start camera automatically on page load
 });
