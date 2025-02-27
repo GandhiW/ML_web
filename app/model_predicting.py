@@ -2,15 +2,11 @@ import os
 from ultralytics import YOLO
 
 def predict_model(filename):
-    # Implement the model prediction process here
     filename_jpg = filename.rsplit('.', 1)[0] + '.jpg'  # Change extension to .jpg
     
     image_path = os.path.join('app/static/images/inputs', filename)
     
-    path_to_model = 'app/models/labelSendiri.pt'
-    # Example: let's pretend we are using a model (e.g., TensorFlow, PyTorch) to predict the image
-    # model = load_model('path_to_model')  # Load your trained model
-    # result = model.predict(image_path)   # Predict with your model
+    path_to_model = 'app/models/Object Detection Model/model-v4.pt'
     model_oo = YOLO(path_to_model)
     
     # Define the custom directory inside the 'app' folder to save the results
@@ -69,3 +65,28 @@ def predict_model(filename):
     print(prediction_image_path)
     
     return class_predictions, prediction_image_path
+
+
+def isMouthArea(filename):
+    image_path = os.path.join('app/static/images/inputs', filename)
+    
+    path_to_model = 'app/models/Classification Model/model-v3.pt'
+    model_mouth_cls = YOLO(path_to_model)
+    
+    # Define the custom directory inside the 'app' folder to save the results
+    save_dir = os.path.join('app', 'static', 'runs', 'detect')
+
+    # Perform inference and save results to the custom directory
+    results = model_mouth_cls.predict(image_path)
+    print(results)
+
+    for r in results:
+        if r is not None:
+            prob = r.probs
+            idx = prob.top1
+            conf = prob.top1conf
+            if idx == 0 and conf.item() > 0.8:
+                print("Mouth area detected: ", conf.item())
+                return True
+            
+    return False

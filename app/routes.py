@@ -6,7 +6,7 @@ import base64
 from PIL import Image
 import numpy as np
 from io import BytesIO
-from .model_predicting import predict_model  # Import the prediction function from a separate file
+from .model_predicting import predict_model, isMouthArea  # Import the prediction function from a separate file
 from .disease_query import load_disease_data, get_disease_info, get_multiple_disease_info  # Import disease querying
 
 main = Blueprint('main', __name__)
@@ -40,22 +40,28 @@ def upload():
             file.save(os.path.join('app/static/images/inputs', unique_filename))
             print('file uploaded')
 
-            # Call the separate function to handle model prediction
-            disease_names, prediction_image_path = predict_model(unique_filename)
+            mouthDetected = isMouthArea(unique_filename)
 
-            if disease_names:
-                # Get disease information for each predicted disease name
-                disease_info_list = get_multiple_disease_info(disease_names, disease_df)
+            if mouthDetected:
+                # Call the separate function to handle model prediction
+                disease_names, prediction_image_path = predict_model(unique_filename)
 
-                if disease_info_list:
-                    print('Got the disease information')
-                    prediction_image_path = prediction_image_path.replace('\\', '/')
-                    return render_template('upload.html', disease_info_list=disease_info_list, image_path=prediction_image_path)
+                if disease_names:
+                    # Get disease information for each predicted disease name
+                    disease_info_list = get_multiple_disease_info(disease_names, disease_df)
+
+                    if disease_info_list:
+                        print('Got the disease information')
+                        prediction_image_path = prediction_image_path.replace('\\', '/')
+                        return render_template('upload.html', disease_info_list=disease_info_list, image_path=prediction_image_path)
+                    else:
+                        flash(f'No disease information found.', 'danger')
+                        return render_template('upload.html')
                 else:
-                    flash(f'No disease information found.', 'danger')
+                    flash(f'No disease detected.', 'warning')
                     return render_template('upload.html')
             else:
-                flash(f'No disease detected.', 'warning')
+                flash(f'No mouth area detected', 'warning')
                 return render_template('upload.html')
         else:
             flash('Tidak ada file yang diunggah.', 'warning')
@@ -86,19 +92,24 @@ def predict():
     image_save_path = os.path.join('app/static/images/inputs', filename)
     Image.fromarray(image).save(image_save_path)
 
-    # Get prediction result from the predict_model function
-    class_predictions, prediction_image_path = predict_model(filename)
+    mouthDetected = isMouthArea(filename)
 
-    if class_predictions:
-        # Query disease information for each predicted disease
-        disease_info_list = get_multiple_disease_info(class_predictions, disease_df)
+    if mouthDetected:
+        # Get prediction result from the predict_model function
+        class_predictions, prediction_image_path = predict_model(filename)
 
-        if disease_info_list:
-            return jsonify({
-                'disease_info': disease_info_list,  # Directly return it as it's already a dictionary
-                'image_path': url_for('static', filename=prediction_image_path.replace('\\', '/'))
-            })
+        if class_predictions:
+            # Query disease information for each predicted disease
+            disease_info_list = get_multiple_disease_info(class_predictions, disease_df)
+
+            if disease_info_list:
+                return jsonify({
+                    'disease_info': disease_info_list,  # Directly return it as it's already a dictionary
+                    'image_path': url_for('static', filename=prediction_image_path.replace('\\', '/'))
+                })
+            else:
+                return jsonify({'error': 'No disease information found'})
         else:
-            return jsonify({'error': 'No disease information found'})
+            return jsonify({'error': 'No disease detected'})
     else:
-        return jsonify({'error': 'No disease detected'})
+        return jsonify({'error': 'No mouth area detected'})
