@@ -13,12 +13,12 @@
 
   <!-- Content -->
   <div class = 'fb_1'>
-    <div class = 'f1'>
-      {% if image_path %}
+    <div class = 'f1' id="prediction-msg">
+      <!-- {% if image_path %}
         <img src="{{ url_for('static', filename=image_path) }}" alt="">
-      {% else %}
+      {% else %} -->
         <h1>Upload an Image</h1>
-      {% endif %}
+      <!-- {% endif %} -->
     </div>
     <div class = 'f2'>
       <form action="/upload" method="POST" enctype="multipart/form-data">
@@ -34,7 +34,7 @@
         <br>
         <button type="submit">Upload</button>
       </form>
-      {% with messages = get_flashed_messages(with_categories=true) %}
+      <!-- {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           <ul>
             {% for category, message in messages %}
@@ -42,24 +42,27 @@
             {% endfor %}
           </ul>
         {% endif %}
-    {% endwith %}
+    {% endwith %} -->
     </div>
   </div>
 
   <hr>
+
+  <div id="progress-container" style="display: none;">
+    <div id="progress-bar"></div>
+  </div>
   
-  {% if disease_info_list %}
   <div class = "prediction">
-    {% for disease_info in disease_info_list %}
-      <h2 class = "penyakit">{{ disease_info['common_name'] }}</h2> <!--override yang ini-->
-      <p class = "penjelasan-penyakit">{{ disease_info['description'] }}</p> <!--override yang ini-->
+    <!-- {% for disease_info in disease_info_list %}
+      <h2 class = "penyakit">{{ disease_info['common_name'] }}</h2> 
+      <p class = "penjelasan-penyakit">{{ disease_info['description'] }}</p> 
       <br>
       <div class = "partition">
         <div class = "p1">
           <h2 class = "penyebab">Penyebab</h2>
           <ul class = "ul">
             {% for factor in disease_info['risk_factors'] %}
-            <li class = "penyebab-penyakit">{{ factor }}</li> <!--override yang ini-->
+            <li class = "penyebab-penyakit">{{ factor }}</li> 
             {% endfor %}
           </ul>
         </div>
@@ -67,16 +70,14 @@
           <h2 class = "solusi">Solusi</h2>
           <ul class = "ul">
             {% for solution in disease_info['solutions'] %}
-            <li class = "solus-penyakit">{{ solution }}</li> <!--override yang ini-->
+            <li class = "solus-penyakit">{{ solution }}</li> 
             {% endfor %}
           </ul>
         </div>
       </div>
       {% endfor %}
-  {% else %}
-    <h2 class = "penyakit">Belum ada prediksi saat ini</h2>
+    <h2 class = "penyakit">Belum ada prediksi saat ini</h2> -->
   </div>
-  {% endif %}
 
   
   <div class="footer">

@@ -1,18 +1,3 @@
-// // navbar
-// fetch("../navbar.html") // Pastikan path menuju navbar benar
-//   .then(response => {
-//       if (!response.ok) {
-//           throw new Error("Failed to load navbar");
-//       }
-//       return response.text();
-//   })
-//   .then(data => {
-//       document.getElementById("navbar").innerHTML = data;
-//   })
-//   .catch(error => console.error("Error loading navbar:", error));
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const video = document.getElementById('webcam');
     const toggleButton = document.getElementById('camera-toggle');
@@ -112,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             canvas.style.display = 'block'; // Tampilkan canvas
             video.pause();                // Hentikan video
 
-             // Show loading animation
+            // Show loading animation
             loadingBarContainer.style.display = 'block';
             loadingBar.style.width = '0%';
 
@@ -153,12 +138,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const predictionContainer = document.querySelector('.prediction');
             predictionContainer.innerHTML = ''; // Clear any previous predictions
+
+            let diseaseInfoHtml;
     
-            if (data.error) {
-                alert(data.error); // Display error if no disease detected
+            if (data.error_msg) {
+                // alert(data.error); // Display error if no disease detected
+                diseaseInfoHtml = `<h2 class="error">${data.error_msg}</h2>`
             } else {
                 // Render disease information dynamically in the prediction container
-                const diseaseInfoHtml = data.disease_info.map(disease_info => `
+                diseaseInfoHtml = data.disease_info.map(disease_info => `
                     <h2 class="penyakit">${disease_info['common_name']}</h2>
                     <p class="penjelasan-penyakit">${disease_info['description']}</p>
                     <br>
@@ -178,10 +166,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>
                 `).join(''); // Join all HTML snippets together
-    
-                // Insert the disease info into the prediction container
-                predictionContainer.innerHTML = diseaseInfoHtml;
-    
+            }
+            
+            // // Insert the disease info into the prediction container
+            predictionContainer.innerHTML = diseaseInfoHtml;
+
+            if(data.image_path){
                 // Display the result image if available
                 const resultImageContainer = document.getElementById('result-image-container');
                 const resultImage = document.createElement('img');
