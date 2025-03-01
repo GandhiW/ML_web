@@ -6,7 +6,7 @@ import base64
 from PIL import Image
 import numpy as np
 from io import BytesIO
-from .model_predicting import predict_model, isMouthArea  # Import the prediction function from a separate file
+from .model_predicting import predict_model, isMouthArea, calculateMouthArea  # Import the prediction function from a separate file
 from .disease_query import load_disease_data, get_disease_info, get_multiple_disease_info  # Import disease querying
 
 main = Blueprint('main', __name__)
@@ -40,11 +40,13 @@ def upload():
             file.save(os.path.join('app/static/images/inputs', unique_filename))
             print('file uploaded')
 
-            mouthDetected = isMouthArea(unique_filename)
+            # mouthDetected = isMouthArea(unique_filename)
 
-            if mouthDetected:
+            mouthDetected, mouthBox = calculateMouthArea(unique_filename)
+
+            if mouthDetected == "True":
                 # Call the separate function to handle model prediction
-                disease_names, prediction_image_path = predict_model(unique_filename)
+                disease_names, prediction_image_path = predict_model(unique_filename, mouthBox)
 
                 if disease_names:
                     # Get disease information for each predicted disease name
@@ -53,6 +55,7 @@ def upload():
                     if disease_info_list:
                         print('Got the disease information')
                         prediction_image_path = prediction_image_path.replace('\\', '/')
+                        print(f"Modified prediction image path: {prediction_image_path}")
                         return render_template('upload.html', disease_info_list=disease_info_list, image_path=prediction_image_path)
                     else:
                         flash(f'No disease information found.', 'danger')
@@ -60,6 +63,9 @@ def upload():
                 else:
                     flash(f'No disease detected.', 'warning')
                     return render_template('upload.html')
+            elif mouthDetected == "Too Small":
+                flash(f'Mouth area detected too small.', 'warning')
+                return render_template('upload.html')
             else:
                 flash(f'No mouth area detected', 'warning')
                 return render_template('upload.html')
@@ -88,15 +94,18 @@ def predict():
     image = np.array(image)  # Convert to numpy array
 
     # Save the image temporarily on the server
-    filename = "captured_image.png"  # Set an arbitrary filename (could be dynamic if you want)
-    image_save_path = os.path.join('app/static/images/inputs', filename)
+    filename = "input_img.png"  # Set an arbitrary filename (could be dynamic if you want)
+    # Generate a random ID and append it to the filename to ensure uniqueness
+    unique_filename = str(uuid.uuid4()) + "_" + filename
+    image_save_path = os.path.join('app/static/images/inputs', unique_filename)
     Image.fromarray(image).save(image_save_path)
+    print('file uploaded')
 
-    mouthDetected = isMouthArea(filename)
+    mouthDetected, mouthBox = calculateMouthArea(unique_filename)
 
-    if mouthDetected:
+    if mouthDetected == "True":
         # Get prediction result from the predict_model function
-        class_predictions, prediction_image_path = predict_model(filename)
+        class_predictions, prediction_image_path = predict_model(unique_filename, mouth_box=mouthBox)
 
         if class_predictions:
             # Query disease information for each predicted disease
@@ -108,8 +117,16 @@ def predict():
                     'image_path': url_for('static', filename=prediction_image_path.replace('\\', '/'))
                 })
             else:
-                return jsonify({'error': 'No disease information found'})
+                return jsonify({
+                        'error_msg': 'Penyakit tidak ditemukan.',
+                        'image_path': url_for('static', filename=prediction_image_path.replace('\\', '/'))
+                    })
         else:
-            return jsonify({'error': 'No disease detected'})
+            return jsonify({
+                'error_msg': 'Tidak ada penyakit terdeteksi.',
+                'image_path': url_for('static', filename=prediction_image_path.replace('\\', '/'))
+            })
+    elif mouthDetected == "Too Small":
+        return jsonify({'error_msg': 'Dekatkan mulut ke kamera lagi.'})
     else:
-        return jsonify({'error': 'No mouth area detected'})
+        return jsonify({'error_msg': 'Tidak ada mulut terdeteksi.'})
